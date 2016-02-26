@@ -8,7 +8,7 @@ import java.rmi.registry.Registry;
 public class Client {
 	private int id,number_of_access;
 	private final int READER = 0;
-	private final int WRITER = 0;
+	private final int WRITER = 1;
 	private BBS_Interface stub;
 	int type;
 	private final double MIN_INTERVAL = 250.0;
@@ -81,7 +81,7 @@ public class Client {
 		BBS_Interface stub = null ;
 		try {
 			String name = "BBS_obj";
-			System.out.println(args[0]+" "+args[1]);
+		
 			Registry reg = LocateRegistry.getRegistry(args[0], Integer.parseInt(args[1]));
 			stub = (BBS_Interface) reg.lookup(name);
 		} catch (Exception e) {
@@ -92,7 +92,9 @@ public class Client {
     	int type = Integer.parseInt(args[3]);
     	int number_of_access = Integer.parseInt(args[4]);
     	Client my_client = new Client(stub,my_id, number_of_access, type);
+    	System.out.println("Client "+my_id+" is initiated.");
     	my_client.run();
     	my_client.close_file();
+    	System.out.println("Client "+my_id+" is terminated.");
 	}
 }

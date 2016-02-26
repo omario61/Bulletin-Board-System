@@ -47,7 +47,7 @@ public class Client_Initiator implements Runnable {
 			session.setConfig(config);
 
 			session.connect();
-			System.out.println("Connected");
+			System.out.println("ssh conncection to client "+client_id);
 
 			Channel channel = session.openChannel("exec");
 			((ChannelExec) channel).setCommand(command);
@@ -65,7 +65,7 @@ public class Client_Initiator implements Runnable {
 					System.out.print(new String(tmp, 0, i));
 				}
 				if (channel.isClosed()) {
-					System.out.println("exit-status: " + channel.getExitStatus());
+					System.out.println("Client "+client_id+" exit-status: " + channel.getExitStatus());
 					break;
 				}
 				try {
@@ -75,9 +75,9 @@ public class Client_Initiator implements Runnable {
 			}
 			channel.disconnect();
 			session.disconnect();
-			System.out.println("DONE");
+			System.out.println("ssh session of client "+client_id+" has been terminated.");
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("ssh session error: "+e.toString()+" for client "+client_id);
 		}
 	}
 }
